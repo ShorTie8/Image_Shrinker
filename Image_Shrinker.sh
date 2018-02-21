@@ -78,7 +78,7 @@ fi
 printf "Starting Block is "
 echo $PARTITION_START
 printf "Sector size "
-SECTOR_SIZE=$(fdisk -l $IMAGEFILE | grep 'Units' | awk '{print $9}')
+SECTOR_SIZE=$(fdisk -l $IMAGEFILE | grep 'Units' | awk '{print $8}')
 echo $SECTOR_SIZE
 
 START_BLOCK_4K=$(($PARTITION_START/4))
@@ -125,15 +125,15 @@ ls -l $IMAGEFILE
 echo " "
 echo "Figuring out some specifics"
 
-BLOCK_COUNT=$(tune2fs -l /dev/loop0 | grep "^Block count" | cut -d ":" -f 2 | tr -d ' ')
+BLOCK_COUNT=$(tune2fs -l $LOOP_DEV | grep "^Block count" | cut -d ":" -f 2 | tr -d ' ')
 printf "Block count "
 echo $BLOCK_COUNT
 
-BLOCK_SIZE=$(tune2fs -l /dev/loop0 | grep "^Block size" | cut -d ":" -f 2 | tr -d ' ')
+BLOCK_SIZE=$(tune2fs -l $LOOP_DEV | grep "^Block size" | cut -d ":" -f 2 | tr -d ' ')
 printf "Block size "
 echo $BLOCK_SIZE
 
-FREE_BLOCKS=$(tune2fs -l /dev/loop0 | grep "^Free blocks" | cut -d ":" -f 2 | tr -d ' ')
+FREE_BLOCKS=$(tune2fs -l $LOOP_DEV | grep "^Free blocks" | cut -d ":" -f 2 | tr -d ' ')
 printf "Free blocks "
 echo $FREE_BLOCKS
 
